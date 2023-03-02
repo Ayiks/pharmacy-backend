@@ -3,6 +3,8 @@ const db = require('./config/db');
 const createTable = require('./database/createTable');
 const userRoutes = require('./routes/userRoute');
 const loginRoute = require('./routes/loginRoute');
+const productRoute = require('./routes/productRoute');
+const orderRoute = require('./routes/orderRoute')
 const authMiddleware = require('./middlewares/auth');
 
 require('dotenv/config')
@@ -16,8 +18,11 @@ const PORT = 4000 || process.env.PORT;
 
 
 app.use(express.json());
-app.use('/pharmacy', authMiddleware, userRoutes);
+app.use('/pharmacy',  userRoutes);
+app.use('/pharmacy',  productRoute);
 app.use('/pharmacy', loginRoute);
+app.use('/pharmacy', orderRoute);
+
 
 
 // Create database table on server startup
