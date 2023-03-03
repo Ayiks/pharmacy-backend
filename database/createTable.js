@@ -10,12 +10,25 @@ const createTable = async () => {
         email VARCHAR(100) NOT NULL,
         password VARCHAR(255) NOT NULL,
         telephone VARCHAR(13) NOT NULL,
-        role VARCHAR(200) NOT NULL,
+        permissions JSON NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
       )
     `;
+    const productTable = ` CREATE TABLE IF NOT EXISTS products (
+      id INT(11) NOT NULL AUTO_INCREMENT,
+      name VARCHAR(100) NOT NULL,
+      cost_price DECIMAL(10, 2) DEFAULT 0,
+      selling_price DECIMAL(10, 2) DEFAULT 0,
+      description TEXT,
+      quantity INT(255),
+      exp_date DATE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      PRIMARY KEY (id)
+    )
+  `;
     const orderTableQuery = `
     CREATE TABLE IF NOT EXISTS orders (
       id INT(11) NOT NULL AUTO_INCREMENT,
@@ -43,6 +56,8 @@ const createTable = async () => {
   `;
     await connection.execute(query);
     console.log('Table created successfully!');
+    await connection.execute(productTable);
+    console.log('product table created successfully!');
     await connection.execute(orderTableQuery);
     console.log('Orders table created successfully!');
     await connection.execute(orderDetailsTableQuery);
