@@ -15,8 +15,8 @@ const User = {
 
   async create(user) {
     const { name, email, password, telephone, role } = user;
-    const sql = 'INSERT INTO users (name, email, password, telephone, role) VALUES (?, ?, ?, ?, ?)';
-    const values = [name, email, password, telephone, role];
+    const sql = 'INSERT INTO users (name, email, password, telephone, permissions) VALUES (?, ?, ?, ?, ?)';
+    const values = [name, email, password, telephone, permissions];
     const [result] = await db.execute(sql, values.map(val => (val !== undefined ? val : "")));
     return result.insertId;
   },  
