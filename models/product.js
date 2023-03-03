@@ -18,8 +18,8 @@ const Product = {
   //function to create a product
   async create(product) {
     const { name, price, description, quantity, exp_date} = product;
-    const sql = "INSERT INTO products (name, price, description, quantity, exp_date) VALUES (?, ?, ?, ?, ?)";
-    const values = [name, price, description, quantity, exp_date];
+    const sql = "INSERT INTO products (name, cost_price, selling_price, description, quantity, exp_date) VALUES (?, ?, ?, ?, ?, ?)";
+    const values = [name, cost_price, selling_price, description, quantity, exp_date];
     const [result] = await db.execute(sql, values.map(val => (val !== undefined ? val : "")));
     return result.insertId;
   },

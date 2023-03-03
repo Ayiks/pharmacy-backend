@@ -67,7 +67,7 @@ exports.createOrder = async (req, res) => {
 
       // Update order total quantity and price
       order.totalQuantity += quantity;
-      order.totalPrice += fetchedProduct.price * quantity;
+      order.totalPrice += fetchedProduct.selling_price * quantity;
     }
 
     // Update order with total quantity and price

@@ -15,7 +15,7 @@ const createOrder = async (userId, products) => {
       let totalPrice = 0;
       for (let i = 0; i < products.length; i++) {
         totalQuantity += products[i].quantity;
-        totalPrice += products[i].price * products[i].quantity;
+        totalPrice += products[i].selling_price * products[i].quantity;
       }
   
       // Insert the order into the orders table
