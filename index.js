@@ -18,10 +18,10 @@ const PORT = 4000 || process.env.PORT;
 
 
 app.use(express.json());
-app.use('/pharmacy',  userRoutes);
-app.use('/pharmacy',  productRoute);
+app.use('/pharmacy',authMiddleware,  userRoutes);
+app.use('/pharmacy',authMiddleware,  productRoute);
 app.use('/pharmacy', loginRoute);
-app.use('/pharmacy', orderRoute);
+app.use('/pharmacy',authMiddleware, orderRoute);
 
 
 
