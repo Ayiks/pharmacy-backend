@@ -13,8 +13,13 @@ const User = {
     return rows[0];
   },
 
+  async findOne(email){
+    const [rows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+    return rows[0];
+  },
+
   async create(user) {
-    const { name, email, password, telephone, role } = user;
+    const { name, email, password, telephone, permissions } = user;
     const sql = 'INSERT INTO users (name, email, password, telephone, permissions) VALUES (?, ?, ?, ?, ?)';
     const values = [name, email, password, telephone, permissions];
     const [result] = await db.execute(sql, values.map(val => (val !== undefined ? val : "")));

@@ -14,7 +14,7 @@ const UserController = {
 
   async createUser(req, res) {
 
-    const { name, email, password, telephone, role } = req.body;
+    const { name, email, password, telephone, permissions } = req.body;
 
   // Hash the password using bcrypt
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -24,7 +24,7 @@ const UserController = {
             email,
             password: hashedPassword,
             telephone,
-            role,
+            permissions,
           };
       const userId = await User.create(user);
       res.status(201).json({ id: userId });

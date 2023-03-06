@@ -43,15 +43,18 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const db = require('../config/db');
 const dotenv = require('dotenv');
 dotenv.config();
 
 exports.login = async (req, res) => {
   try {
-    const { email, password, permission } = req.body;
+    const { email, password } = req.body;
+    const permission = ['admin','sales','counter', 'customer']
 
     // Get user from database
-    const user = await User.findOne({ email });
+    const [rows] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+    const user = rows[0];
 
     // Check if user exists
     if (!user) {
@@ -65,7 +68,7 @@ exports.login = async (req, res) => {
     }
 
     // Check if user has required permission
-    if (user.permissions && user.permissions.includes(permission)) {
+    if (user.permissions && permission.some(p => user.permissions.includes(p))) {
       // Generate token
       const token = jwt.sign({ userId: user._id, email: user.email, permissions: user.permissions }, process.env.JWT_SECRET, { expiresIn: '1h' });
       return res.status(200).json({ message: 'Authentication successful.', token });
@@ -73,7 +76,8 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized.' });
     }
   } catch (error) {
-    return res.status(500).json({ message: 'An error occurred while logging in.', error });
+    console.log(error);
+    return res.status(500).json({ message: 'An error occurred while logging in.', error:error });
   }
 };
 
