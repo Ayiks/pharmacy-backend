@@ -6,10 +6,12 @@ const loginRoute = require('./routes/loginRoute');
 const productRoute = require('./routes/productRoute');
 const orderRoute = require('./routes/orderRoute')
 const authMiddleware = require('./middlewares/auth');
+const cors = require('cors');
 
 require('dotenv/config')
 
 const app = express();
+app.use(cors());
 
 const PORT = 4000 || process.env.PORT;
 
